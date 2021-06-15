@@ -32,7 +32,7 @@ global_task_template: &GLOBAL_TASK_TEMPLATE
   timeout_in: 120m  # https://cirrus-ci.org/faq/#instance-timed-out
   persistent_worker:
    labels:
-    vm_size: drahtbot_smalt
+    vm_size: drahtbot_small
    isolation:
     container:
       image: debian:latest
