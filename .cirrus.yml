@@ -24,6 +24,7 @@ global_task_template: &GLOBAL_TASK_TEMPLATE
   << : *BASE_TEMPLATE
   timeout_in: 120m  # https://cirrus-ci.org/faq/#instance-timed-out
   lscpu_script:
+   - apt update && apt install procps -y 
    - free -h
    - df -h
    - nproc
