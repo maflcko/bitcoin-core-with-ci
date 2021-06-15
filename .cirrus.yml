@@ -30,6 +30,10 @@ base_template: &BASE_TEMPLATE
 global_task_template: &GLOBAL_TASK_TEMPLATE
   << : *BASE_TEMPLATE
   timeout_in: 120m  # https://cirrus-ci.org/faq/#instance-timed-out
+  lscpu_script:
+   - free -h
+   - df -h
+   - nproc
   persistent_worker:
    labels:
     vm_size: drahtbot_small
@@ -37,7 +41,7 @@ global_task_template: &GLOBAL_TASK_TEMPLATE
     container:
       image: debian:latest
       cpu: 1
-      memory: 128G
+      memory: 1G
 
 depends_sdk_cache_template: &DEPENDS_SDK_CACHE_TEMPLATE
   depends_sdk_cache:
@@ -68,11 +72,7 @@ compute_credits_template: &CREDITS_TEMPLATE
 task:
   name: 'test a'
   << : *GLOBAL_TASK_TEMPLATE
-  script_sleep:
-   - sleep 5
 
 task:
   name: 'test b'
   << : *GLOBAL_TASK_TEMPLATE
-  script_sleep:
-   - sleep 5
