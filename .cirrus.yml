@@ -43,6 +43,7 @@ global_task_template: &GLOBAL_TASK_TEMPLATE
   env:
     DANGER_RUN_CI_ON_HOST: "1"  # Containers will be discarded after the run, so there is no risk that the ci scripts modify the system
     CCACHE_MAXSIZE: "900M"  # Is this enough, but not too large???
+    CCACHE_DIR: "/tmp/ccache_dir"
   use_compute_credits: true
 
 dockerfile_template: &DOCKERFILE_TEMPLATE
