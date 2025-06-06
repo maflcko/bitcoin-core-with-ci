@@ -46,8 +46,8 @@ global_task_template: &GLOBAL_TASK_TEMPLATE
   use_compute_credits: true
 
 dockerfile_template: &DOCKERFILE_TEMPLATE
-  cpu: 1
-  memory: 4G
+  cpu: 4
+  memory: 16G
   greedy: true  # https://medium.com/cirruslabs/introducing-greedy-container-instances-29aad06dc2b4
   # https://cirrus-ci.org/guide/linux/#linux-containers
   # https://cirrus-ci.org/guide/docker-builder-vm/#dockerfile-as-a-ci-environment
