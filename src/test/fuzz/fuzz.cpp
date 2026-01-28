@@ -79,11 +79,13 @@ void FuzzFrameworkRegisterTarget(std::string_view name, TypeTestOneInput target,
 
 static std::string_view g_fuzz_target;
 static const TypeTestOneInput* g_test_one_input{nullptr};
+bool g_ever_used_g_prng{false};
 
 static void test_one_input(FuzzBufferType buffer)
 {
     CheckGlobals check{};
     (*Assert(g_test_one_input))(buffer);
+    g_ever_used_g_prng |= g_used_g_prng;
 }
 
 const std::function<std::string()> G_TEST_GET_FULL_NAME{[]{
@@ -273,6 +275,9 @@ int main(int argc, char** argv)
     }
     const auto end_time{Now<SteadySeconds>()};
     std::cout << g_fuzz_target << ": succeeded against " << tested << " files in " << count_seconds(end_time - start_time) << "s." << std::endl;
+    if (tested && !g_ever_used_g_prng && g_seeded_g_prng_zero) {
+        Assert(false); // remove unused SeedRandomStateForTest(SeedRand::ZEROS)?
+    }
 #endif
     return 0;
 }
