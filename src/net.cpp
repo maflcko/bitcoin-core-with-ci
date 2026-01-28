@@ -2235,6 +2235,7 @@ void CConnman::SocketHandlerConnected(const std::vector<CNode*>& nodes,
                 if (!pnode->fDisconnect) {
                     LogDebug(BCLog::NET, "socket closed, %s", pnode->DisconnectMsg());
                 }
+            UninterruptibleSleep(599ms);
                 pnode->CloseSocketDisconnect();
             }
             else if (nBytes < 0)
