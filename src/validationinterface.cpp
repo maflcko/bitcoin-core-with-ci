@@ -12,6 +12,7 @@
 #include <kernel/types.h>
 #include <primitives/block.h>
 #include <primitives/transaction.h>
+#include <random.h>
 #include <util/check.h>
 #include <util/log.h>
 #include <util/task_runner.h>
@@ -154,6 +155,8 @@ void ValidationSignals::SyncWithValidationInterfaceQueue()
     promise.get_future().wait();
 }
 
+static FastRandomContext g_rnd{};
+
 // Use a macro instead of a function for conditional logging to prevent
 // evaluating arguments when logging is not enabled.
 #define ENQUEUE_AND_LOG_EVENT(event, log_msg)                                                                    \
@@ -166,6 +169,7 @@ void ValidationSignals::SyncWithValidationInterfaceQueue()
         LOG_EVENT("Enqueuing %s", enqueue_log_msg);                                                              \
         m_internals->m_task_runner->insert([local_log_msg = std::move(enqueue_log_msg), local_event = (event)] { \
             LOG_EVENT("%s", local_log_msg);                                                                      \
+            UninterruptibleSleep(1ms * g_rnd.randrange(55));   \
             local_event();                                                                                       \
         });                                                                                                      \
     } while (0)
