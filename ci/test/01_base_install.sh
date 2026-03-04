@@ -33,7 +33,7 @@ if [ -n "${APT_LLVM_V}" ]; then
   (
     # shellcheck disable=SC2034
     source /etc/os-release
-    echo "deb http://apt.llvm.org/${VERSION_CODENAME}/ llvm-toolchain-${VERSION_CODENAME}-${APT_LLVM_V} main" > "/etc/apt/sources.list.d/llvm-toolchain-${VERSION_CODENAME}-${APT_LLVM_V}.list"
+    echo "deb http://apt.llvm.org/${VERSION_CODENAME}/ llvm-toolchain-${VERSION_CODENAME}               main" > "/etc/apt/sources.list.d/llvm-toolchain-${VERSION_CODENAME}-${APT_LLVM_V}.list"
   )
 fi
 
@@ -67,7 +67,7 @@ if [ -n "$PIP_PACKAGES" ]; then
 fi
 
 if [[ -n "${USE_INSTRUMENTED_LIBCPP}" ]]; then
-  ${CI_RETRY_EXE} git clone --depth=1 https://github.com/llvm/llvm-project -b "llvmorg-22.1.7" /llvm-project
+  ${CI_RETRY_EXE} git clone --depth=1 https://github.com/llvm/llvm-project  /llvm-project
 
 # LLVM is configured with LIBCXXABI_USE_LLVM_UNWINDER=OFF,
 # because libunwind doesn't handle exceptions under MSAN.
