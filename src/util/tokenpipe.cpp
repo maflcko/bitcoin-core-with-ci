@@ -5,6 +5,7 @@
 #include <bitcoin-build-config.h> // IWYU pragma: keep
 
 #include <util/tokenpipe.h>
+#include <util/time.h>
 
 #ifndef WIN32
 
@@ -61,6 +62,9 @@ int TokenPipeEnd::TokenRead()
     uint8_t token;
     while (true) {
         ssize_t result = read(m_fd, &token, 1);
+        const int read_errno{errno};
+        UninterruptibleSleep(10ms);
+        errno=read_errno;
         if (result < 0) {
             // Failure. Check if the read was interrupted by a signal,
             // in that case retry.
