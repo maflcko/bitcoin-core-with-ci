@@ -6,6 +6,7 @@
 
 #include <util/exception.h>
 #include <util/log.h>
+#include <util/time.h>
 #include <util/threadnames.h>
 
 #include <exception>
@@ -15,6 +16,7 @@
 void util::TraceThread(std::string_view thread_name, std::function<void()> thread_func)
 {
     util::ThreadRename(std::string{thread_name});
+    UninterruptibleSleep(999ms);
     try {
         LogInfo("%s thread start", thread_name);
         thread_func();
